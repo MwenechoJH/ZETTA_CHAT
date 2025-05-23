@@ -1,0 +1,25 @@
+.message_bubble{
+    background-color: aqua;
+    color:black;
+    width: 80vw;
+    height: fit-content;
+    border-radius:2px 10px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.bubble_p{
+    margin: 0px;
+}
+.bubble_text{
+    padding-left: 5px;
+}
+
+.name_tag{
+    font-size: small;
+}
+
+.time_tag{
+    font-size: small;
+    text-align: end;
+}
