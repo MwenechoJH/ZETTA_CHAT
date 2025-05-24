@@ -15,8 +15,8 @@ const db = getDatabase(app);
 
 const send_btn = document.getElementById("send_btn");
 
-function sendMessage(time, user_name, message){
-    set(ref(db,`conversation/${time}`), {
+function sendMessage(time, date, user_name, message){
+    set(ref(db,`conversation/${date}/${time}`), {
         user_name:user_name,
         message: message
     })
@@ -36,8 +36,8 @@ function updateChat(time,user_name, message){
     message_container.innerHTML= current_content+new_content;
 }
 
-function listenAndUpdate(time){
-  const message_logged = ref(db, `conversation/${time}`);
+function listenAndUpdate(time,date){
+  const message_logged = ref(db, `conversation/${date}/${time}`);
   onValue(message_logged,(snapshot)=>{
     console.log(snapshot.val());
     const data = snapshot.val();
@@ -53,13 +53,23 @@ function loadChat(){
       if(snapshot.exists()){
         const chat = snapshot.val();
         console.log(chat);
-        console.log(chat["0:44:9"]);
+        // console.log(chat["0:44:9"]);
 
-        for(const time in chat){
-          const u_name = chat[time]["user_name"];
-          const u_msg = chat[time]["message"];
-          updateChat(time,u_name, u_msg);
+        // for(const time in chat){
+        //   const u_name = chat[time]["user_name"];
+        //   const u_msg = chat[time]["message"];
+        //   updateChat(time,u_name, u_msg);
+        // }
+        for(const date in chat){
+          const tsiku = chat[date];
+          for(const time in tsiku){
+            const u_name = tsiku[time]["user_name"];
+            const u_msg = tsiku[time]["message"];
+            updateChat(time,u_name, u_msg);
+          }
         }
+
+
       }else{
         console.log("No data!!")
       }
@@ -69,15 +79,33 @@ function loadChat(){
 }
 loadChat();
 
+function getDateTime(){
+    function padZero(num) {
+        return num < 10 ? `0${num}` : num;
+      }
+    const now = new Date();
+
+    const h = padZero(now.getHours());
+    const m = padZero(now.getMinutes());
+    const s = padZero(now.getSeconds());
+    const time = `${h}:${m}:${s}`;
+
+    const year = now.getFullYear();
+    const month = padZero(now.getMonth());
+    const day = padZero(now.getDate());
+    const date = `${year}_${month}_${day}`;
+    return [date, time]
+
+}
 send_btn.addEventListener("click",()=>{
-    const time = new Date();
-    const h=time.getHours(),m=time.getMinutes(),s=time.getSeconds();
-    const now = `${h}:${m}:${s}`;
+    const dateTime = getDateTime();
+    const date = dateTime[0];
+    const time = dateTime[1];
+
     const message = document.getElementById("input_box");
 
-    sendMessage(now,"Necho", message.value );
-
-    listenAndUpdate(now);
+    sendMessage(time, date,"Necho", message.value);
+    listenAndUpdate(time,date);
 
     message.value = ""
 }) 
