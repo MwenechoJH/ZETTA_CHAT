@@ -5,11 +5,12 @@ body{
 .main_container{
     position: fixed;
     top:0;
+    bottom: 0;
     display: grid;
     grid-template-columns: 1fr; /* 3 equal columns */
-    grid-template-rows: 1fr 8fr 1fr;    /* 2 rows (100px and 200px tall) */
+    grid-template-rows: 1fr 8fr 1.5fr ;    /* 2 rows (100px and 200px tall) */
     gap: 10px; 
-    height: 100vh;
+    height: 100dvh;
 }
 
 .head_container{
@@ -25,7 +26,7 @@ body{
 #messages_container{
     grid-row: 2;
     min-height: 0;
-    max-height: 100%;
+    /* max-height: 60%; */
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -38,13 +39,23 @@ body{
     margin-top: 4%;
 }
 .message_bubble{
-    background-color: rgb(255, 145, 0);
+
     color:black;
     width: 90%;
     height: fit-content;
     border-radius:2px 10px;
     padding: 5px;
     margin-top: 10px;
+}
+
+.Necho{
+    background-color: aqua;
+}
+.Penjani{
+    background-color: blueviolet;
+}
+.Henry{
+    background-color: rgb(255, 145, 0);
 }
 
 .bubble_p{
@@ -68,7 +79,11 @@ body{
     display: flex;
     flex-direction: row;
     width: 100vw;
-    padding: 10px;
+    padding-left:10px;
+    /* margin-bottom: 10%; */
+    height:80%;
+    margin-bottom:10px;
+    padding-bottom: 10px;
     background-color: white;
 }
 #input_box{

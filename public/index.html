@@ -4,50 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zetta Chat</title>
-    <script defer src="../dist/main.js"></script>
+    <script defer src="./main.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="main_container">
-            <div class="head_container">
-        <h1>ZETTA CHAT</h1>
-        <p>Currently still working on this site</p>
-    </div>
+        <div class="head_container">
+            <h1>ZETTA CHAT</h1>
+            <p>The chat app for the Team</p>
+            
+            <span>
+                <button id="change_user">change user</button>
+                <span>Current user: </span>
+                <span id="current_user">Necho</span>
+            </span>
+        </div>
     
     
-    <div id="messages_container">
-        <!-- <div class="message_day_container" id="2025_04_24">
-            <div class="date" >2025_04_24</div>
+        <div id="messages_container">
+            <!-- <div class="message_day_container" id="2025_04_24">
+                <div class="date" >2025_04_24</div>
 
-        </div> -->
+            </div> -->
 
 
-        <!-- <div class="message_bubble"  id="necho_20_20_20">
-            <p>Necho</p>
-            <p class="bubble_text">
-                This is a sample message, this can be removed by js code
-            </p>
-            <p>20:20:20</p>
-        </div> -->
+            <!-- <div class="message_bubble"  id="necho_20_20_20">
+                <p>Necho</p>
+                <p class="bubble_text">
+                    This is a sample message, this can be removed by js code
+                </p>
+                <p>20:20:20</p>
+            </div> -->
 
-        <!-- THE ACTUAL TEMPLATE IS BELOW -->
+            <!-- THE ACTUAL TEMPLATE IS BELOW -->
 
-        <!-- <div class="message_bubble"  id="${user_name}_${time}">
-            <p class="bubble_p name_tag"><b>${user_name}</b></p>
-            <p class="bubble_p bubble_text">
-                ${message}
-            </p>
-            <p class="bubble_p time_tag">${time}</p>
-        </div> -->
+            <!-- <div class="message_bubble"  id="${user_name}_${time}">
+                <p class="bubble_p name_tag"><b>${user_name}</b></p>
+                <p class="bubble_p bubble_text">
+                    ${message}
+                </p>
+                <p class="bubble_p time_tag">${time}</p>
+            </div> -->
         </div>
-    <div class="entry_box">
-        <div class="container">
-            <input id="input_box" type="text">
+        <div class="entry_box">
+            <div class="container">
+                <input id="input_box" type="text">
+            </div>
+            <div class="container">
+                <button id="send_btn">Send</button>
+            </div>
         </div>
-        <div class="container">
-            <button id="send_btn">Send</button>
-        </div>
-    </div>
 
     </div>
 

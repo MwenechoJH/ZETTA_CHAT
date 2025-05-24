@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "web":"webpack"
+    "web": "webpack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "firebase-tools": "^14.4.0",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1"
   },

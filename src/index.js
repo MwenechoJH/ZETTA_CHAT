@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app';
-import { getDatabase, set, ref, onValue, child, get } from 'firebase/database';
+import { getDatabase, set, ref, onValue, child, get, onChildAdded } from 'firebase/database';
 
 //below is creating a firebase application
 //Future me, you have probably done this a billion times.
@@ -16,7 +16,15 @@ const app = initializeApp({
 const db = getDatabase(app);
 
 const send_btn = document.getElementById("send_btn");
+const change_usr = document.getElementById("change_user");
 
+function scrollToBottom() {
+  const container = document.getElementById("messages_container");
+  container.scrollTo({
+    top: container.scrollHeight,
+    behavior: 'smooth'
+  });
+}
 // below is a simple function to update the database
 // time and date are used to track where the data should be placed
 //user_name and message are the actual data being placed
@@ -50,7 +58,7 @@ function updateChat(time, date, user_name, message){
     function updateBubble(d_container){
       const current_content = d_container.innerHTML;
       const new_content = 
-      `<div class="message_bubble"  id="${user_name}_${time}">
+      `<div class="message_bubble ${user_name}"  id="${user_name}_${time}">
             <p class="bubble_p name_tag"><b>${user_name}</b></p>
             <p class="bubble_p bubble_text">
                 ${message}
@@ -58,6 +66,8 @@ function updateChat(time, date, user_name, message){
             <p class="bubble_p time_tag">${time}</p>
         </div>`;
       d_container.innerHTML= current_content+new_content;
+      scrollToBottom();
+      // day_message_container.scrollTop = day_message_container.scrollHeight;
 
     }
     if(day_message_container){
@@ -72,6 +82,7 @@ function updateChat(time, date, user_name, message){
 // below, Listens to the database while client is on page
 // calls updateChat() function
 // gets new updates from database then changes client side
+
 function listenAndUpdate(time,date){
   const message_logged = ref(db, `conversation/${date}/${time}`);
   onValue(message_logged,(snapshot)=>{
@@ -86,6 +97,7 @@ function listenAndUpdate(time,date){
 // this checks the database and loads all the messages
 // calls the updateChat() function
 // takes in **u_date** parameter incase there is no data in the db
+
 function loadChat(u_date){
     const conversation = ref(db, 'conversation/');
     get(child(conversation,"/")).then((snapshot)=>{
@@ -101,6 +113,7 @@ function loadChat(u_date){
             updateChat(time,date,u_name, u_msg);
           }
         }
+        scrollToBottom();
       }else{
         console.log("No data!!");
         console.log("Constructing a new day container...");
@@ -136,15 +149,17 @@ function sendAndUpdate(){
     const dateTime = getDateTime();
     const date = dateTime[0];
     const time = dateTime[1];
+    const current_user =document.getElementById("current_user");
 
     const message_box = document.getElementById("input_box");
     if(message_box.value!==""){
-        sendMessage(time, date,"Necho", message_box.value);
+        sendMessage(time, date,`${current_user.textContent}`, message_box.value);
         listenAndUpdate(time,date);
     }
     message_box.value = "";
 }
 // loading the chat the moment the page is loaded
+
 loadChat(getDateTime()[0]);
 
 // code depends on one button
@@ -152,6 +167,25 @@ send_btn.addEventListener("click",()=>{
     sendAndUpdate();
 }) 
 
+
+
+
+
+
+change_usr.addEventListener("click",()=>{
+  console.log("changing user");
+  const current_user = document.getElementById("current_user");
+  console.log(current_user.innerText);
+  if(current_user.textContent=="Necho"){
+    current_user.textContent="Henry";
+  } else if(current_user.textContent=="Henry"){
+    current_user.textContent="Penjani";
+  } else if(current_user.textContent=="Penjani"){
+    current_user.textContent="Necho";
+  } else{
+    console.log("Error in Changing user")
+  }
+})
 
 function updateUser(name, age, course){
   set(ref(db,'updates'),{
